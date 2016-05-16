@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\Animator">
+      <UniqueIdentifier>{a43f6402-e7ce-4cc8-b6e4-e9db7d0261fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Animator">
+      <UniqueIdentifier>{f0a525a9-4738-40f6-b409-0e100e782440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Log">
+      <UniqueIdentifier>{543ceb2c-ae51-407e-9661-5e46e4df0f83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Log">
+      <UniqueIdentifier>{c1a6afa3-b1d9-49e1-92c3-55c1b09515e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Game">
+      <UniqueIdentifier>{07fde996-f053-409e-a06f-33e14652ffe7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Game">
+      <UniqueIdentifier>{f2e0a120-54bb-4b1a-9d8d-5532c64d8582}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\engine\Animator.h">
+      <Filter>头文件\Animator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Graphics.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Log\CLog.h">
+      <Filter>头文件\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\GameController.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\GameLevel.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\Level1.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\engine\Animator.cpp">
+      <Filter>源文件\Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Graphics.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Log\CLog.cpp">
+      <Filter>源文件\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Game\GameController.cpp">
+      <Filter>源文件\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Game\Level1.cpp">
+      <Filter>源文件\Game</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
