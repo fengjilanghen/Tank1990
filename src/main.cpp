@@ -8,12 +8,17 @@
 int g_WindowWidth			= 800;
 int g_WindowHeight			= 600;
 bool g_WindowShouldClose	= false;
-const char g_WindowTitle[]	= "Tank 1990";
+WCHAR g_WindowTitle[]		= L"Tank 1990";
 
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	if (message == WM_DESTROY)
+	if (message == WM_CLOSE)
+	{
+		g_WindowShouldClose = true;
+		return 0;
+	}
+	else if (message == WM_DESTROY)
 	{
 		PostQuitMessage(0);
 		return 0;
@@ -24,7 +29,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 int WINAPI WinMain(HINSTANCE hInstance,	HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	const char	class_name[] = "TANK1990CLASS"; 
+	WCHAR	class_name[] = L"TANK1990CLASS"; 
 	HWND		windowHandle;
 
 	HeapSetInformation(NULL, HeapEnableTerminationOnCorruption, NULL, 0);

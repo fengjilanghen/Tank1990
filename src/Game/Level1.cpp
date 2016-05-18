@@ -30,5 +30,8 @@ void CLevel1::Update()
 void CLevel1::Render()
 {
 	g_Graphics.ClearScreen(0, 0, 0);
-	g_Graphics.DrawCircle(255.f, y, 100.f, 60.f);
+	ID2D1Bitmap *bm;
+	g_Graphics.LoadBitmapFromFile(L"E:/github/Tank1990/bin/pic/tank.png", &bm);
+	g_Graphics.Draw(bm, D2D1::RectF(0, 0, 400, 400));
+	bm->Release();
 }
