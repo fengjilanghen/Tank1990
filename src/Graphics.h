@@ -55,6 +55,8 @@ public:
 		PCWSTR uri,
 		ID2D1Bitmap **ppBitmap
 		);
+
+	ID2D1HwndRenderTarget* GetRenderTarget(){ return m_pRenderTarget; }
 private:
 	HRESULT CreateDeviceIndependentResources();
 	HRESULT CreateDeviceResources(HWND windowHandle);

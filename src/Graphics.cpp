@@ -1,5 +1,6 @@
 #include "Graphics.h"
 #include "Log/CLog.h"
+#include "Convert.h"
 
 Graphics g_Graphics;
 
@@ -269,6 +270,12 @@ HRESULT Graphics::LoadBitmapFromFile(
 	SafeRelease(&pSource);
 	SafeRelease(&pStream);
 	SafeRelease(&pConverter);
+
+	if (FAILED(hr))
+	{
+		std::string bname = utf8_encode(uri);
+		g_Log.write("Õº∆¨º”‘ÿ ß∞‹, ¬∑æ∂:%s", bname.c_str());
+	}
 
 	return hr;
 }

@@ -1,10 +1,17 @@
 #include "XmlParser.h"
 #include <fstream>
 #include <sstream>
+#include <queue>
+#include <iostream>
 
 using namespace std;
 
 #define ZeroStructByPtr(p) memset(p, 0, sizeof(*p))
+
+
+PXMLELEMENT			XmlParser::m_pRoot		= NULL;
+std::string			XmlParser::m_Content	= "";
+std::string			XmlParser::m_ErrorMsg	= "";
 
 PXMLELEMENT XmlParser::ParseFile(const char* fname)
 {
@@ -14,20 +21,20 @@ PXMLELEMENT XmlParser::ParseFile(const char* fname)
 	if(!loadFile(fname)) return NULL;
 
 	char *p = &m_Content[0];
-	PXMLELEMENT root = parseRecursion(p);
+	m_pRoot = parseRecursion(p);
 	skipSpace(p);
 	if (!p || *p)
 	{
 		release();
 		return NULL;
 	}
-	return root;
+	return m_pRoot;
 }
 
 bool XmlParser::loadFile(const char* fname)
 {
 	ifstream xmlfile(fname);
-	if (fname)
+	if (!fname)
 	{
 		//ASSERT(fname);
 		return false;
@@ -61,7 +68,7 @@ PXMLELEMENT XmlParser::parseRecursion(char *&p)
 		{
 			if (*p != '<')
 			{
-				setErrorMsg("没有找到"<", 序号: %d", p - &m_Content[0]);
+				setErrorMsg("没有找到\"<\", 序号: %d", static_cast<int>(p - &m_Content[0]));
 				return NULL;
 			}
 
@@ -87,7 +94,7 @@ PXMLELEMENT XmlParser::parseRecursion(char *&p)
 				setErrorMsg("属性和属性值未用“=”连接, 序号: %d", p - &m_Content[0]);
 				return NULL;
 			}
-
+			++p;
 			skipSpace(p);
 
 			if (!getAttribValue(p, value)) return NULL;
@@ -105,20 +112,16 @@ PXMLELEMENT XmlParser::parseRecursion(char *&p)
 				setErrorMsg("\"/\"后面没有找到\">\", 序号: %d", p - &m_Content[0]);
 				return NULL;
 			}
-			++p;
 			state = STATE_SUCCESS;
 		}break;
 		case STATE_FINDCHILD:
 		{
 			// 判断是否是</ + <tagname>
-			char *ps = p;
-			if (compareStr(ps, endtag))
+			if (compareStr(p, endtag))
 			{
 				state = STATE_FINDENDTAGEND;
-				++p;
 				break;
 			}
-			p = ps;
 
 			// 读取子标签
 			PXMLELEMENT pChild = parseRecursion(p);
@@ -137,7 +140,6 @@ PXMLELEMENT XmlParser::parseRecursion(char *&p)
 				return NULL;
 			}
 			state = STATE_SUCCESS;
-			++p;
 		}break;
 		case STATE_SUCCESS:
 		{
@@ -145,6 +147,7 @@ PXMLELEMENT XmlParser::parseRecursion(char *&p)
 			pe->tag = elm.tag;
 			pe->attribs.swap(elm.attribs);
 			pe->children.swap(elm.children);
+			++p;
 			return pe;
 		}break;
 		}
@@ -159,7 +162,8 @@ bool XmlParser::compareStr(char *&p, std::string& str)
 	int i = 0,
 		size = str.size();
 	while (p && *p && i < size && *p == str[i++]) ++p;
-	p = ps;
+	if (i < size)
+		p = ps;
 	return i == size;
 }
 
@@ -168,6 +172,7 @@ bool XmlParser::getTagName(char *&p, std::string& o_tag)
 	char *ps = p;
 	while (p && *p && isTagNameLegalCharactor(*p))++p;
 	o_tag.assign(ps, p);
+	return true;
 }
 
 
@@ -175,6 +180,12 @@ bool XmlParser::getAttribKey(char *&p, std::string& o_key)
 {
 	char *ps = p;
 	while (p && *p && isAttribKeyLegalCharactor(*p))++p;
+	if (p - ps == 0)
+	{
+		setErrorMsg("属性名读取错误..");
+		return false;
+	}
+
 	o_key.assign(ps, p);
 	return true;
 }
@@ -196,4 +207,34 @@ bool XmlParser::getAttribValue(char *&p, std::string& o_value)
 		setErrorMsg("value is not end with '\"', index: %d", p - &m_Content[0]);
 		return false;
 	}
+	++p;
+
+	return true;
+}
+
+void XmlParser::release()
+{
+	queue<PXMLELEMENT> qu;
+	if (m_pRoot) qu.push(m_pRoot);
+	while (!qu.empty())
+	{
+		PXMLELEMENT p = qu.front();
+		
+		for (AttribsPtrVec::iterator it = p->attribs.begin(); it != p->attribs.end(); ++it)
+		{
+			delete *it;
+		}
+
+		for (ChildrenPtrVec::iterator it = p->children.begin(); it != p->children.end(); ++it)
+		{
+			qu.push(*it);
+		}
+		delete p;
+		qu.pop();
+	}
+}
+
+void  XmlParser::setErrorMsg(const char* format, ...)
+{
+	cout << format << endl;
 }

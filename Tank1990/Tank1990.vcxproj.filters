@@ -51,6 +51,12 @@
     <ClInclude Include="..\src\Game\Level1.h">
       <Filter>头文件\Game</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\Sprite.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Convert.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\engine\Animator.cpp">
@@ -70,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="..\src\Game\Level1.cpp">
       <Filter>源文件\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Sprite.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

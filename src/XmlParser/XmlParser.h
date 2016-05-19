@@ -1,8 +1,20 @@
+/*********************************************************
+*
+*	此xml只是用来存储数据，并不是完全的xml格式，其格式要求如下：
+*	1. 标签名和属性名只能以字母和下划线组成
+*	2. 属性值必须用双引号括起来
+*	3. <，</与标签名之间不能有空格, <与/之间也不能有空格
+*	4. 没有标签内文本
+*	5. 无法解析注释（<!--）, 命令（<?）, 文本（<![DATA[）等标签
+*
+*********************************************************/
+
 #ifndef _XMLPARSER_H_
 #define _XMLPARSER_H_
 
 #include <string>
 #include <vector>
+
 
 
 ///////////////////////////////////////////////////////////
@@ -55,7 +67,8 @@ class XmlParser
 {
 public:
 	static PXMLELEMENT ParseFile(const char* fname);
-	static const string& GetLastErrorMsg();
+	static const std::string& GetLastErrorMsg();
+	static PXMLELEMENT GetRoot(){ return m_pRoot; }
 private:
 	XmlParser() = delete;
 	XmlParser(const XmlParser&) = delete;
@@ -69,11 +82,12 @@ private:
 
 	static bool isTagNameLegalCharactor(char c) { return isalpha(c) || c == '_'; }
 	static bool isAttribKeyLegalCharactor(char c) { return isalpha(c) || c == '_'; }
-	static bool isSpace(char c) { return (c == ' ' || c == '\r' || c == '\n'); }
-	static void skipSpace(char *p){ while (p && *p && isSpace(*p)) ++p; }
+	static bool isSpace(char c) { return (c == ' ' || c == '\t' || c == '\r' || c == '\n'); }
+	static void skipSpace(char *&p){ while (p && *p && isSpace(*p)) ++p; }
 
 	static void release();
-	static void setErrorMsg(const std::string& format, ...);
+	static void setErrorMsg(const char* format, ...);
+
 
 private:
 	enum 
@@ -86,6 +100,7 @@ private:
 		STATE_SUCCESS,
 	};
 private:
+	static PXMLELEMENT			m_pRoot;
 	static std::string			m_Content;
 	static std::string			m_ErrorMsg;
 };

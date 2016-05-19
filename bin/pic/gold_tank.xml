@@ -1,4 +1,4 @@
-<Animator img = "./tank.png", counter_max = 1>
+<Animator img = "./tank.png" counter_max = "1">
 	<Action name = "down" total = "4">
 		<frame x="0" y="0" w="38" h="38" />
 		<frame x="38" y="0" w="38" h="38" />

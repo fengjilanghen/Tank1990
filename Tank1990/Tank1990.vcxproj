@@ -79,14 +79,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\Convert.h" />
     <ClInclude Include="..\src\engine\Animator.h" />
     <ClInclude Include="..\src\Game\GameController.h" />
     <ClInclude Include="..\src\Game\GameLevel.h" />
     <ClInclude Include="..\src\Game\Level1.h" />
     <ClInclude Include="..\src\Graphics.h" />
     <ClInclude Include="..\src\Log\CLog.h" />
+    <ClInclude Include="..\src\Sprite.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\Sprite.cpp" />
     <ClCompile Include="..\src\engine\Animator.cpp" />
     <ClCompile Include="..\src\Game\GameController.cpp" />
     <ClCompile Include="..\src\Game\Level1.cpp" />
