@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="头文件\Animator">
-      <UniqueIdentifier>{a43f6402-e7ce-4cc8-b6e4-e9db7d0261fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\Animator">
-      <UniqueIdentifier>{f0a525a9-4738-40f6-b409-0e100e782440}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\Log">
       <UniqueIdentifier>{543ceb2c-ae51-407e-9661-5e46e4df0f83}</UniqueIdentifier>
     </Filter>
@@ -31,11 +25,20 @@
     <Filter Include="头文件\Game">
       <UniqueIdentifier>{f2e0a120-54bb-4b1a-9d8d-5532c64d8582}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\XML">
+      <UniqueIdentifier>{083f70a9-5466-447e-88bd-480c060dd48e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\XML">
+      <UniqueIdentifier>{c66a6894-1159-4a1d-983e-b94a2ccc547f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Sprite">
+      <UniqueIdentifier>{a43f6402-e7ce-4cc8-b6e4-e9db7d0261fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Sprite">
+      <UniqueIdentifier>{f0a525a9-4738-40f6-b409-0e100e782440}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\engine\Animator.h">
-      <Filter>头文件\Animator</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Graphics.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -51,17 +54,29 @@
     <ClInclude Include="..\src\Game\Level1.h">
       <Filter>头文件\Game</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Sprite.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Convert.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\global_def.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\XmlParser\XmlParser.h">
+      <Filter>头文件\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\Tank.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\engine\SpriteAnimator.h">
+      <Filter>头文件\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\engine\SpriteSheet.h">
+      <Filter>头文件\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\engine\Sprite.h">
+      <Filter>头文件\Sprite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\engine\Animator.cpp">
-      <Filter>源文件\Animator</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -77,8 +92,20 @@
     <ClCompile Include="..\src\Game\Level1.cpp">
       <Filter>源文件\Game</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Sprite.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="..\src\XmlParser\XmlParser.cpp">
+      <Filter>源文件\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Game\Tank.cpp">
+      <Filter>源文件\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\SpriteAnimator.cpp">
+      <Filter>源文件\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\Sprite.cpp">
+      <Filter>源文件\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\SpriteSheet.cpp">
+      <Filter>源文件\Sprite</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

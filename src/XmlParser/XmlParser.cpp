@@ -1,3 +1,4 @@
+#include "global_def.h"
 #include "XmlParser.h"
 #include <fstream>
 #include <sstream>
@@ -8,6 +9,7 @@ using namespace std;
 
 #define ZeroStructByPtr(p) memset(p, 0, sizeof(*p))
 
+#define FALSE_ASSERT_RETURN(express) if(!(express)) {ASSERT(false); return false;}
 
 PXMLELEMENT			XmlParser::m_pRoot		= NULL;
 std::string			XmlParser::m_Content	= "";
@@ -15,7 +17,6 @@ std::string			XmlParser::m_ErrorMsg	= "";
 
 PXMLELEMENT XmlParser::ParseFile(const char* fname)
 {
-	m_ErrorMsg = "";
 	release();
 	
 	if(!loadFile(fname)) return NULL;
@@ -23,11 +24,7 @@ PXMLELEMENT XmlParser::ParseFile(const char* fname)
 	char *p = &m_Content[0];
 	m_pRoot = parseRecursion(p);
 	skipSpace(p);
-	if (!p || *p)
-	{
-		release();
-		return NULL;
-	}
+	FALSE_ASSERT_RETURN(p && !*p);
 	return m_pRoot;
 }
 
@@ -36,7 +33,7 @@ bool XmlParser::loadFile(const char* fname)
 	ifstream xmlfile(fname);
 	if (!fname)
 	{
-		//ASSERT(fname);
+		ASSERT(false);
 		return false;
 	}
 
@@ -52,7 +49,7 @@ bool XmlParser::loadFile(const char* fname)
 
 PXMLELEMENT XmlParser::parseRecursion(char *&p)
 {
-	if (!m_ErrorMsg.empty()) return NULL;
+	FALSE_ASSERT_RETURN(m_ErrorMsg.empty());
 
 	XmlElement elm;
 	string endtag = "</";
@@ -68,11 +65,12 @@ PXMLELEMENT XmlParser::parseRecursion(char *&p)
 		{
 			if (*p != '<')
 			{
+				ASSERT(false);
 				setErrorMsg("没有找到\"<\", 序号: %d", static_cast<int>(p - &m_Content[0]));
 				return NULL;
 			}
 
-			if (!getTagName(++p, elm.tag)) return NULL;
+			FALSE_ASSERT_RETURN (getTagName(++p, elm.tag));
 			state = STATE_FINDATTRIB;
 		}break;
 		case STATE_FINDATTRIB:
@@ -86,29 +84,28 @@ PXMLELEMENT XmlParser::parseRecursion(char *&p)
 			}
 
 			string key, value;
-			if (!getAttribKey(p, key)) return NULL;
+			FALSE_ASSERT_RETURN(getAttribKey(p, key));
 
 			skipSpace(p);
 			if (*p != '=')
 			{
+				ASSERT(false);
 				setErrorMsg("属性和属性值未用“=”连接, 序号: %d", p - &m_Content[0]);
 				return NULL;
 			}
 			++p;
 			skipSpace(p);
 
-			if (!getAttribValue(p, value)) return NULL;
-
-			PXMLATTRIB attrib = new XmlAttrib;
-			attrib->key = key;
-			attrib->value = value;
-			elm.attribs.push_back(attrib);
+			FALSE_ASSERT_RETURN(getAttribValue(p, value));
+			
+			elm.attribs.insert(make_pair(key, value));
 
 		}break;
 		case STATE_FINDCLOSEEND:		// />
 		{
 			if (*p != '>')
 			{
+				ASSERT(false);
 				setErrorMsg("\"/\"后面没有找到\">\", 序号: %d", p - &m_Content[0]);
 				return NULL;
 			}
@@ -125,10 +122,7 @@ PXMLELEMENT XmlParser::parseRecursion(char *&p)
 
 			// 读取子标签
 			PXMLELEMENT pChild = parseRecursion(p);
-			if (!m_ErrorMsg.empty())
-			{
-				return NULL;
-			}
+			FALSE_ASSERT_RETURN(m_ErrorMsg.empty());
 			elm.children.push_back(pChild);
 
 		}break;
@@ -136,6 +130,7 @@ PXMLELEMENT XmlParser::parseRecursion(char *&p)
 		{
 			if (*p != '>')
 			{
+				ASSERT(false);
 				setErrorMsg("属性和属性值未用“=”连接, 序号: %d", p - &m_Content[0]);
 				return NULL;
 			}
@@ -152,6 +147,7 @@ PXMLELEMENT XmlParser::parseRecursion(char *&p)
 		}break;
 		}
 	}
+	ASSERT(false);
 	return NULL;
 }
 
@@ -219,11 +215,6 @@ void XmlParser::release()
 	while (!qu.empty())
 	{
 		PXMLELEMENT p = qu.front();
-		
-		for (AttribsPtrVec::iterator it = p->attribs.begin(); it != p->attribs.end(); ++it)
-		{
-			delete *it;
-		}
 
 		for (ChildrenPtrVec::iterator it = p->children.begin(); it != p->children.end(); ++it)
 		{
@@ -232,6 +223,9 @@ void XmlParser::release()
 		delete p;
 		qu.pop();
 	}
+
+	m_Content.clear();
+	m_ErrorMsg.clear();
 }
 
 void  XmlParser::setErrorMsg(const char* format, ...)

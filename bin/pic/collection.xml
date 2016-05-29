@@ -1,3 +1,3 @@
 <collection>
-<picture img = "./tank.png" x="0" y="76" w="608" h="380" />
+<picture img = "pic/tank.png" name = "welcome" x="0" y="76" w="608" h="380" />
 </collection>

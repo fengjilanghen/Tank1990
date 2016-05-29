@@ -41,6 +41,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>../bin</OutDir>
+    <TargetName>$(ProjectName)_d</TargetName>
+    <IncludePath>../src/engine;../src/game;../src/XmlParser;../src/Log;../src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -80,22 +83,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Convert.h" />
-    <ClInclude Include="..\src\engine\Animator.h" />
+    <ClInclude Include="..\src\engine\Sprite.h" />
+    <ClInclude Include="..\src\engine\SpriteAnimator.h" />
+    <ClInclude Include="..\src\engine\SpriteSheet.h" />
     <ClInclude Include="..\src\Game\GameController.h" />
     <ClInclude Include="..\src\Game\GameLevel.h" />
     <ClInclude Include="..\src\Game\Level1.h" />
+    <ClInclude Include="..\src\Game\Tank.h" />
+    <ClInclude Include="..\src\global_def.h" />
     <ClInclude Include="..\src\Graphics.h" />
     <ClInclude Include="..\src\Log\CLog.h" />
-    <ClInclude Include="..\src\Sprite.h" />
+    <ClInclude Include="..\src\XmlParser\XmlParser.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\Sprite.cpp" />
-    <ClCompile Include="..\src\engine\Animator.cpp" />
+    <ClCompile Include="..\src\engine\Sprite.cpp" />
+    <ClCompile Include="..\src\engine\SpriteAnimator.cpp" />
+    <ClCompile Include="..\src\engine\SpriteSheet.cpp" />
     <ClCompile Include="..\src\Game\GameController.cpp" />
     <ClCompile Include="..\src\Game\Level1.cpp" />
+    <ClCompile Include="..\src\Game\Tank.cpp" />
     <ClCompile Include="..\src\Graphics.cpp" />
     <ClCompile Include="..\src\Log\CLog.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\XmlParser\XmlParser.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

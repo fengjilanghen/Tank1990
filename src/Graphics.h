@@ -6,20 +6,8 @@
 #include <d2d1helper.h>
 #include <dwrite.h>
 #include <wincodec.h>
+#include "global_def.h"
 
-template<class Interface>
-inline void
-SafeRelease(
-Interface **ppInterfaceToRelease
-)
-{
-	if (*ppInterfaceToRelease != NULL)
-	{
-		(*ppInterfaceToRelease)->Release();
-
-		(*ppInterfaceToRelease) = NULL;
-	}
-}
 
 
 class Graphics

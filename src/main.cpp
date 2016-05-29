@@ -5,6 +5,7 @@
 #include "Convert.h"
 
 
+
 int g_WindowWidth			= 800;
 int g_WindowHeight			= 600;
 bool g_WindowShouldClose	= false;
@@ -22,6 +23,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		PostQuitMessage(0);
 		return 0;
+	}
+	else if (message == WM_KEYDOWN)
+	{
+		CGameController::KeyEvent(wParam, true);
+	}
+	else if (message == WM_KEYUP)
+	{
+		CGameController::KeyEvent(wParam, false);
 	}
 
 	DefWindowProc(hWnd, message, wParam, lParam);
@@ -89,6 +98,8 @@ int WINAPI WinMain(HINSTANCE hInstance,	HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	MSG msg;
 	msg.message = WM_NULL;
+	int fps = 10;
+	int last_time = GetTickCount();
 	while (!g_WindowShouldClose)
 	{
 		if (PeekMessage(&msg, NULL, NULL, NULL, PM_REMOVE))
@@ -102,11 +113,13 @@ int WINAPI WinMain(HINSTANCE hInstance,	HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			DispatchMessage(&msg);
 		}
 
+		CGameController::Update(fps / 1000.0f);
 		g_Graphics.BeginDraw();
-		CGameController::Update();
+		g_Graphics.ClearScreen(0, 0, 0);
 		CGameController::Render();
 		g_Graphics.EndDraw();
-
+		while (GetTickCount() - last_time < 1000 / fps);
+		last_time = GetTickCount();
 	}
 
 	return 0;

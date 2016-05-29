@@ -14,6 +14,7 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 
 
@@ -24,10 +25,10 @@
 ///////////////////////////////////////////////////////////
 struct XmlAttrib;
 struct XmlElement;
-typedef XmlAttrib*					PXMLATTRIB;
-typedef XmlElement*					PXMLELEMENT;
-typedef std::vector<PXMLATTRIB>		AttribsPtrVec;
-typedef std::vector<PXMLELEMENT>	ChildrenPtrVec;
+typedef XmlAttrib*										PXMLATTRIB;
+typedef XmlElement*										PXMLELEMENT;
+typedef std::unordered_map<std::string, std::string>	AttribsPtrUMap;
+typedef std::vector<PXMLELEMENT>						ChildrenPtrVec;
 
 ///////////////////////////////////////////////////////////
 //
@@ -41,19 +42,12 @@ typedef std::vector<PXMLELEMENT>	ChildrenPtrVec;
 //	类型定义
 //
 ///////////////////////////////////////////////////////////
-// 标签属性
-struct XmlAttrib
-{
-	std::string		key;
-	std::string		value;
-	XmlAttrib() :key(""), value(""){}
-};
 
 // 标签
 struct XmlElement 
 {
 	std::string			tag;
-	AttribsPtrVec		attribs;
+	AttribsPtrUMap		attribs;
 	ChildrenPtrVec		children;	//同父标签通过其串联起来
 	XmlElement() :tag(""), attribs(), children(){}
 };
