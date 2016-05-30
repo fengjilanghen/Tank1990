@@ -98,7 +98,7 @@ int WINAPI WinMain(HINSTANCE hInstance,	HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	MSG msg;
 	msg.message = WM_NULL;
-	int fps = 10;
+	int fps = 30;
 	int last_time = GetTickCount();
 	while (!g_WindowShouldClose)
 	{

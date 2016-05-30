@@ -109,6 +109,7 @@ void CTank::Move(int orientation)
 	if (newPos.y >= g_WindowHeight - m_Size.cy)
 		newPos.y = g_WindowHeight - m_Size.cy;
 
+	m_Position = newPos;
 }
 
 
