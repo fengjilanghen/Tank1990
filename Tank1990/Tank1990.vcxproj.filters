@@ -75,6 +75,9 @@
     <ClInclude Include="..\src\engine\Sprite.h">
       <Filter>头文件\Sprite</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\Game\GameObject.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">

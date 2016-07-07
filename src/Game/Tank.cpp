@@ -5,22 +5,24 @@ extern int g_WindowWidth, g_WindowHeight;
 #define FASLE_RETURN(exp) if (!(exp)){ return; }
 
 CTank::CTank()
-	:m_Orientation(UP)
+	:CGameObject({ 0, 0 }, { 0, 0 }, { 0, 0 })
 	, m_bAuto(false)
-	, m_AniSprite()
-	, m_Size({0, 0})
-	, m_Position({0, 0})
-	, m_Speed({ 0, 0 })
 	, m_nLast(0)
 {
 }
 
-bool CTank::Init(bool bAuto, const char* fname, const sSize& sz, const sVelocity& speed, int orient)
+CTank::~CTank()
 {
-	if(!m_AniSprite.Init(CSprite::ST_ANIMATOR, fname)) return false;
-	m_Size	= sz;
-	m_Speed = speed;
+	Release();
+}
+
+bool CTank::Init(bool bAuto, const char* fname, const sPoint& pos, const sSize& sz, int speed, int orient)
+{
+	if (!m_AniSprite.Init(CSprite::ST_ANIMATOR, fname)) return false;
 	SetAuto(bAuto);
+	SetPosition(pos);
+	SetSize(sz);
+	SetSpeed(speed);
 
 	CSpriteAnimator* pAni = GetAnimator();
 	if (!pAni) return false;
@@ -61,7 +63,7 @@ void CTank::Move(int orientation)
 		pAni->Stop();
 		pAni->Start("left");
 		if (m_Orientation == orientation)
-			off.x = -m_Speed.xs;
+			off.x = -m_Speed;
 
 		m_Orientation = orientation;
 	}break;
@@ -70,7 +72,7 @@ void CTank::Move(int orientation)
 		pAni->Stop();
 		pAni->Start("right");
 		if (m_Orientation == orientation)
-			off.x = m_Speed.xs;
+			off.x = m_Speed;
 		m_Orientation = orientation;
 	}break;
 	case UP:
@@ -78,7 +80,7 @@ void CTank::Move(int orientation)
 		pAni->Stop();
 		pAni->Start("up");
 		if (m_Orientation == orientation)
-			off.y = -m_Speed.ys;
+			off.y = -m_Speed;
 		m_Orientation = orientation;
 	}break;
 	case DOWN:
@@ -86,7 +88,7 @@ void CTank::Move(int orientation)
 		pAni->Stop();
 		pAni->Start("down");
 		if (m_Orientation == orientation)
-			off.y = m_Speed.ys;
+			off.y = m_Speed;
 		m_Orientation = orientation;
 	}break;
 	default:
@@ -121,19 +123,6 @@ void CTank::Draw()
 //	called by self
 //
 /////////////////////////////////////////////////////////////////////
-
-CSpriteAnimator* CTank::GetAnimator()
-{
-	CSprite::uSpriteAttach* pAttach = (CSprite::uSpriteAttach*)(m_AniSprite.GetAttachPtr());
-	if (!pAttach)
-	{
-		return NULL;
-	}
-
-	return (CSpriteAnimator*)(pAttach->pAnimator);
-}
-
-
 void CTank::StupidAuto()
 {
 	if (m_nLast-- == 0)

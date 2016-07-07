@@ -33,7 +33,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		CGameController::KeyEvent(wParam, false);
 	}
 
-	DefWindowProc(hWnd, message, wParam, lParam);
+	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
 int WINAPI WinMain(HINSTANCE hInstance,	HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -118,7 +118,7 @@ int WINAPI WinMain(HINSTANCE hInstance,	HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		g_Graphics.ClearScreen(0, 0, 0);
 		CGameController::Render();
 		g_Graphics.EndDraw();
-		while (GetTickCount() - last_time < 1000 / fps);
+		while (static_cast<float>(GetTickCount() - last_time) < 1000.0f / fps);
 		last_time = GetTickCount();
 	}
 

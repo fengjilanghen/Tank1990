@@ -58,6 +58,8 @@ bool CSprite::Init(eSprite_Type type, const std::string& fname, float opacity/* 
 	}
 	m_Type = type;
 	m_bLoaded = true;
+
+	return m_bLoaded;
 }
 
 void CSprite::Release()
@@ -170,7 +172,7 @@ bool CSprite::InitAnimator(const std::string& fname)
 	SetBitmap(str);
 
 	getAttribValue(str, pRoot->attribs, "counter_max");
-	if (str.empty()) return;
+	if (str.empty()) return false;
 	counter_max = std::atoi(str.c_str());
 
 	m_Attach.pAnimator = new CSpriteAnimator;
@@ -180,7 +182,7 @@ bool CSprite::InitAnimator(const std::string& fname)
 	if (!pAni->BeginSet())
 	{
 		SAFE_DELETE(pAni);
-		return;
+		return false;
 	}
 
 	pAni->SetCounterMax(counter_max);
@@ -208,7 +210,7 @@ bool CSprite::InitAnimator(const std::string& fname)
 		for (int i = 0; i < total; ++i)
 		{
 			PXMLELEMENT frame = (*it)->children.at(i);
-			if (!frame) return;
+			if (!frame) return false;
 
 			const AttribsPtrUMap& frame_apm = frame->attribs;
 			sRect rect;

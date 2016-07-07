@@ -88,6 +88,7 @@
     <ClInclude Include="..\src\engine\SpriteSheet.h" />
     <ClInclude Include="..\src\Game\GameController.h" />
     <ClInclude Include="..\src\Game\GameLevel.h" />
+    <ClInclude Include="..\src\Game\GameObject.h" />
     <ClInclude Include="..\src\Game\Level1.h" />
     <ClInclude Include="..\src\Game\Tank.h" />
     <ClInclude Include="..\src\global_def.h" />

@@ -32,6 +32,8 @@ bool Graphics::Init(HWND windowHandle)
 	hr =  CreateDeviceResources(windowHandle);
 	if (FAILED(hr))
 		return false;
+
+	return true;
 }
 
 //
