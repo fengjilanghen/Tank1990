@@ -83,9 +83,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Convert.h" />
+    <ClInclude Include="..\src\engine\Animator.h" />
+    <ClInclude Include="..\src\engine\IRenderObject.h" />
+    <ClInclude Include="..\src\engine\Sheet.h" />
     <ClInclude Include="..\src\engine\Sprite.h" />
-    <ClInclude Include="..\src\engine\SpriteAnimator.h" />
-    <ClInclude Include="..\src\engine\SpriteSheet.h" />
+    <ClInclude Include="..\src\engine\SpriteFactory.h" />
     <ClInclude Include="..\src\Game\GameController.h" />
     <ClInclude Include="..\src\Game\GameLevel.h" />
     <ClInclude Include="..\src\Game\GameObject.h" />
@@ -97,9 +99,10 @@
     <ClInclude Include="..\src\XmlParser\XmlParser.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\engine\Animator.cpp" />
+    <ClCompile Include="..\src\engine\Sheet.cpp" />
     <ClCompile Include="..\src\engine\Sprite.cpp" />
-    <ClCompile Include="..\src\engine\SpriteAnimator.cpp" />
-    <ClCompile Include="..\src\engine\SpriteSheet.cpp" />
+    <ClCompile Include="..\src\engine\SpriteFactory.cpp" />
     <ClCompile Include="..\src\Game\GameController.cpp" />
     <ClCompile Include="..\src\Game\Level1.cpp" />
     <ClCompile Include="..\src\Game\Tank.cpp" />

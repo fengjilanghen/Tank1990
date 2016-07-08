@@ -40,7 +40,7 @@ public:
 	virtual void Draw();
 
 
-	virtual CSpriteAnimator* GetAnimator()
+	virtual CAnimator* GetAnimator()
 	{
 		CSprite::uSpriteAttach* pAttach = (CSprite::uSpriteAttach*)(m_pAniSprite->GetAttachPtr());
 		if (!pAttach)
