@@ -8,27 +8,29 @@
 
 using namespace std;
 
-#define FALSE_RETURN(express) if(!(express)) { ASSERT(false); return false; }
-
+static const char HAWDK[] = "HAWDK";
 
 CLevel1::CLevel1()
-	: m_GreenTank()
-	, m_RedTank()
-	, m_TileSheet()
-	, m_nRows(0)
+	: m_nRows(0)
+	, m_nMaxTankCount(4)
 	, m_nColumns(0)
 	, m_nTileWidth(0)
 	, m_nTileHeight(0)
-	, m_Tiles(0)
-	, m_HawkPos({ -1, -1, -1, -1 })
+	, m_TankFac()
+	, m_BulletFac()
+	, m_TileFac()
+	, m_Tanks()
+	, m_MyTank()
+	, m_Bullets()
+	//, m_CollidableTiles()
+	, m_Map()
 {
 
 }
 
-
 bool CLevel1::Load()
 {
-	m_Tiles.clear();
+	m_Map.clear();
 
 	ifstream lvlf("maps/1.csv");
 	if (!lvlf)
@@ -48,9 +50,11 @@ bool CLevel1::Load()
 
 	if(!getMapInfoHeader(line)) return false;
 
-	m_Tiles.reserve(m_nRows);
+	m_Map.reserve(m_nRows);
 
+	sSize sz = { m_nTileWidth, m_nTileHeight };
 	int hawk_count	= 0;
+	int i = 0;
 	while (getline(lvlf, line))
 	{
 		stringstream ss(line);
@@ -59,47 +63,21 @@ bool CLevel1::Load()
 		int j = 0;
 		while (getline(ss, token, ','))
 		{
-			col[j] = std::stoi(token);
-			FALSE_RETURN(col[j] >= TT_FLOOR && col[j] <= TT_COUNT);
-
-			if (col[j] == TT_HAWDK)
-			{
-				++hawk_count;
-				if (m_HawkPos.left == -1)
-				{
-					m_HawkPos.left = j;
-					m_HawkPos.right = m_HawkPos.left + 1;
-					m_HawkPos.top = m_Tiles.size();
-					m_HawkPos.bottom = m_HawkPos.top + 1;
-				}
-				else
-				{
-					if (j >= m_HawkPos.right)
-						m_HawkPos.right = j + 1;
-
-					int i = m_Tiles.size();
-					if (i >= m_HawkPos.bottom)
-						m_HawkPos.bottom = i + 1;
-				}
-			}			
-
+			col[j] = m_TileFac.Create(token, false, { i*m_nTileWidth, j*m_nTileHeight }, sz);
 			++j;
 		}
-		FALSE_RETURN(j == m_nColumns);
-		m_Tiles.push_back(col);
+		ASSERT_RETURN_FALSE(j == m_nColumns);
+		m_Map.push_back(col);
+		++i;
 	}
 
-	FALSE_RETURN(m_Tiles.size() == m_nRows);
+	ASSERT_RETURN_FALSE(m_Map.size() == m_nRows);
 
 	if(!checkHawk(hawk_count)) 
 		return false;
 
 	sSize sz = {m_nTileWidth * 2, m_nTileHeight* 2};
-	sVelocity speed = { m_nTileWidth, m_nTileHeight };
-	m_GreenTank.Init(false, "pic/green_tank.xml", sz, speed);
-	m_GreenTank.SetPosition({ 24, 30 });
 
-	m_RedTank.Init(true, "pic/gold_tank.xml", sz, speed);
 
 
 	return true;
@@ -107,13 +85,11 @@ bool CLevel1::Load()
 
 void CLevel1::Unload()
 {
-	m_GreenTank.Release();
-	m_TileSheet.Release();
 	m_nRows = 0;
 	m_nColumns = 0;
 	m_nTileWidth = 0;
 	m_nTileHeight = 0;
-	m_Tiles.clear();
+	m_Map.clear();
 	m_HawkPos = { -1, -1, -1, -1 };
 }
 
@@ -174,24 +150,33 @@ bool CLevel1::getMapInfoHeader(const std::string &line)
 	stringstream ss(line);
 	string token;
 	
-	FALSE_RETURN(getline(ss, token, ','));
+	ASSERT_RETURN_FALSE(getline(ss, token, ','));
 	m_nColumns = std::stoi(token);
-	FALSE_RETURN(m_nColumns > 0);
+	ASSERT_RETURN_FALSE(m_nColumns > 0);
 
-	FALSE_RETURN(getline(ss, token, ','));
+	ASSERT_RETURN_FALSE(getline(ss, token, ','));
 	m_nRows = std::stoi(token);
-	FALSE_RETURN(m_nRows > 0);
+	ASSERT_RETURN_FALSE(m_nRows > 0);
 
-	FALSE_RETURN(getline(ss, token, ','));
+	ASSERT_RETURN_FALSE(getline(ss, token, ','));
 	m_nTileWidth = std::stoi(token);
-	FALSE_RETURN(m_nTileWidth > 0);
+	ASSERT_RETURN_FALSE(m_nTileWidth > 0);
 
-	FALSE_RETURN(getline(ss, token, ','));
+	ASSERT_RETURN_FALSE(getline(ss, token, ','));
 	m_nTileHeight = std::stoi(token);
-	FALSE_RETURN(m_nTileHeight > 0);
+	ASSERT_RETURN_FALSE(m_nTileHeight > 0);
 
-	FALSE_RETURN(getline(ss, token, ','));
-	FALSE_RETURN(m_TileSheet.Init(CSprite::ST_SHEET, token.c_str()));
+	// tile sheet
+	ASSERT_RETURN_FALSE(getline(ss, token, ','));
+	ASSERT_RETURN_FALSE(m_TileFac.Init(token.c_str()));
+
+	// tank sheet
+	ASSERT_RETURN_FALSE(getline(ss, token, ','));
+	ASSERT_RETURN_FALSE(m_TankFac.Init(token.c_str()));
+
+	// bullet sheet
+	ASSERT_RETURN_FALSE(getline(ss, token, ','));
+	ASSERT_RETURN_FALSE(m_BulletFac.Init(token.c_str()));
 
 	return true;
 }
@@ -203,13 +188,13 @@ void CLevel1::renderMap()
 				m_HawkPos.top * m_nTileHeight,
 				m_HawkPos.right * m_nTileWidth,
 				m_HawkPos.bottom * m_nTileHeight };
-	m_TileSheet.Draw(rect, TT_HAWDK);
+	m_Mapheet.Draw(rect, TT_HAWDK);
 
 	for (int i = 0; i < m_nRows; ++i)
 	{
 		for (int j = 0; j < m_nColumns; ++j)
 		{
-			int type = m_Tiles[i][j];
+			int type = m_Map[i][j];
 			switch (type)
 			{
 			case TT_FLOOR:
@@ -222,7 +207,7 @@ void CLevel1::renderMap()
 			{
 				int left	= j*m_nTileWidth;
 				int top		= i*m_nTileHeight;
-				m_TileSheet.Draw({ left, top, left + m_nTileWidth, top + m_nTileHeight }, type);
+				m_Mapheet.Draw({ left, top, left + m_nTileWidth, top + m_nTileHeight }, type);
 			}break;
 			}
 		}
@@ -241,7 +226,7 @@ bool CLevel1::checkHawk(int count)
 		{
 			for (int j = m_HawkPos.top; j < m_HawkPos.bottom; ++j)
 			{
-				FALSE_RETURN(m_Tiles.at(j).at(i) == TT_HAWDK);
+				ASSERT_RETURN_FALSE(m_Map.at(j).at(i) == TT_HAWDK);
 			}
 		}
 		return true;

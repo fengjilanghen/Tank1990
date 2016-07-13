@@ -42,9 +42,6 @@
     <ClInclude Include="..\src\Game\GameController.h">
       <Filter>头文件\Game</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Game\GameLevel.h">
-      <Filter>头文件\Game</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Game\Level1.h">
       <Filter>头文件\Game</Filter>
     </ClInclude>
@@ -57,25 +54,55 @@
     <ClInclude Include="..\src\XmlParser\XmlParser.h">
       <Filter>头文件\XML</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Game\Tank.h">
-      <Filter>头文件\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Game\GameObject.h">
-      <Filter>头文件\Game</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\engine\Sprite.h">
       <Filter>头文件\Game</Filter>
     </ClInclude>
     <ClInclude Include="..\src\engine\Animator.h">
       <Filter>头文件\Game</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\engine\Sheet.h">
-      <Filter>头文件\Game</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\engine\SpriteFactory.h">
       <Filter>头文件\Game</Filter>
     </ClInclude>
     <ClInclude Include="..\src\engine\IRenderObject.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\Tile.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\engine\TileSheet.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\ActionSet.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\ActionSetSheet.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\MoveObject.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\ObjectManager.hpp">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\ObjectFactory.hpp">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\GameObject.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\IGameLevel.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\MoveObjFactory.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\Tank.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\TankFactory.h">
+      <Filter>头文件\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\TileFactory.h">
       <Filter>头文件\Game</Filter>
     </ClInclude>
   </ItemGroup>
@@ -98,19 +125,31 @@
     <ClCompile Include="..\src\XmlParser\XmlParser.cpp">
       <Filter>源文件\XML</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Game\Tank.cpp">
-      <Filter>源文件\Game</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\engine\Animator.cpp">
-      <Filter>源文件\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\engine\Sheet.cpp">
       <Filter>源文件\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\src\engine\Sprite.cpp">
       <Filter>源文件\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\src\engine\SpriteFactory.cpp">
+      <Filter>源文件\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Game\GameObject.cpp">
+      <Filter>源文件\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Game\Tile.cpp">
+      <Filter>源文件\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\TileSheet.cpp">
+      <Filter>源文件\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Game\ActionSet.cpp">
+      <Filter>源文件\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Game\ActionSetSheet.cpp">
+      <Filter>源文件\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Game\MoveObject.cpp">
       <Filter>源文件\Game</Filter>
     </ClCompile>
   </ItemGroup>

@@ -9,7 +9,7 @@ class CSprite
 {
 public:
 	CSprite();
-	virtual ~CSprite();
+	~CSprite();
 
 	bool Init(const std::string& bname, float opacity = 1.0f);
 	void Release();

@@ -6,6 +6,11 @@
 #define ASSERT_RETURN(exp) if (!(exp)) { ASSERT(false);	return;	}
 #define ASSERT_RETURN_FALSE(exp) if (!(exp)) { ASSERT(false);	return false;}
 
+#define SINGLETON_PRIVATE_FUNCTION(theClass)  \
+private: \
+	theClass(); \
+	theClass(const theClass&) = delete; \
+	theClass* operator=(const theClass&) = delete;
 
 template<class Interface>
 inline void
@@ -28,6 +33,7 @@ struct sRect
 	int right;
 	int bottom;
 };
+
 
 
 #endif //_GLOBAL_DEF_H_

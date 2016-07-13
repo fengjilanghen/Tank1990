@@ -85,14 +85,23 @@
     <ClInclude Include="..\src\Convert.h" />
     <ClInclude Include="..\src\engine\Animator.h" />
     <ClInclude Include="..\src\engine\IRenderObject.h" />
-    <ClInclude Include="..\src\engine\Sheet.h" />
+    <ClInclude Include="..\src\engine\TileSheet.h" />
     <ClInclude Include="..\src\engine\Sprite.h" />
     <ClInclude Include="..\src\engine\SpriteFactory.h" />
+    <ClInclude Include="..\src\Game\ActionSet.h" />
+    <ClInclude Include="..\src\Game\MoveObjFactory.h" />
+    <ClInclude Include="..\src\Game\ObjectManager.hpp" />
     <ClInclude Include="..\src\Game\GameController.h" />
-    <ClInclude Include="..\src\Game\GameLevel.h" />
+    <ClInclude Include="..\src\Game\IGameLevel.h" />
     <ClInclude Include="..\src\Game\GameObject.h" />
     <ClInclude Include="..\src\Game\Level1.h" />
+    <ClInclude Include="..\src\Game\MoveObject.h" />
+    <ClInclude Include="..\src\Game\ActionSetSheet.h" />
+    <ClInclude Include="..\src\Game\ObjectFactory.hpp" />
     <ClInclude Include="..\src\Game\Tank.h" />
+    <ClInclude Include="..\src\Game\TankFactory.h" />
+    <ClInclude Include="..\src\Game\Tile.h" />
+    <ClInclude Include="..\src\Game\TileFactory.h" />
     <ClInclude Include="..\src\global_def.h" />
     <ClInclude Include="..\src\Graphics.h" />
     <ClInclude Include="..\src\Log\CLog.h" />
@@ -100,12 +109,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\engine\Animator.cpp" />
-    <ClCompile Include="..\src\engine\Sheet.cpp" />
+    <ClCompile Include="..\src\engine\TileSheet.cpp" />
     <ClCompile Include="..\src\engine\Sprite.cpp" />
     <ClCompile Include="..\src\engine\SpriteFactory.cpp" />
+    <ClCompile Include="..\src\Game\ActionSet.cpp" />
     <ClCompile Include="..\src\Game\GameController.cpp" />
+    <ClCompile Include="..\src\Game\GameObject.cpp" />
     <ClCompile Include="..\src\Game\Level1.cpp" />
-    <ClCompile Include="..\src\Game\Tank.cpp" />
+    <ClCompile Include="..\src\Game\MoveObject.cpp" />
+    <ClCompile Include="..\src\Game\ActionSetSheet.cpp" />
+    <ClCompile Include="..\src\Game\Tile.cpp" />
     <ClCompile Include="..\src\Graphics.cpp" />
     <ClCompile Include="..\src\Log\CLog.cpp" />
     <ClCompile Include="..\src\main.cpp" />

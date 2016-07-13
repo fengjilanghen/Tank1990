@@ -1,39 +1,43 @@
 #include "SpriteFactory.h"
+
+CSpriteFactory::CSpriteFactory()
+{
+	m_Sprites.clear();
+}
+
+CSpriteFactory::~CSpriteFactory()
+{
+	Release();
+}
 ////////////////////////////////////////////////////////////////////////
 //
 // called by others
 //
 ////////////////////////////////////////////////////////////////////////
-CSpriteFactory* CSpriteFactory::GetInstancePtr()
+void CSpriteFactory::Release()
 {
-	static CSpriteFactory sf;
-	return &sf;
+	for (SpriteUMap::iterator it = m_Sprites.begin(); it != m_Sprites.end(); ++it)
+	{
+		delete it->second;
+		it->second = NULL;
+	}
+	m_Sprites.clear();
 }
 
-CSprite *CSpriteFactory::CreateSprite(const std::string& img)
+CSprite *CSpriteFactory::Create(const std::string& img)
 {
 	SpriteUMap::iterator it = m_Sprites.find(img);
 	if (it != m_Sprites.end())
 	{
-		return &it->second;
+		return it->second;
 	}
-
-	if (m_Sprites[img].Init(img))
+	m_Sprites[img] = new CSprite();
+	if (m_Sprites[img] && m_Sprites[img]->Init(img))
 	{
-		return &m_Sprites[img];
+		return m_Sprites[img];
 	}
 	
 	m_Sprites.erase(img);
 	ASSERT(false);
 	return NULL;
-}
-
-////////////////////////////////////////////////////////////////////////
-//
-// called by self
-//
-////////////////////////////////////////////////////////////////////////
-CSpriteFactory::CSpriteFactory()
-{
-	m_Sprites.clear();
 }

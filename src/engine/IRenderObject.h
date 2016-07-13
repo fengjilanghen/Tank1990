@@ -4,8 +4,8 @@
 class IRenderObject
 {
 public:
-	virtual void Update(float dt);
-	virtual void Draw();
+	virtual void Draw(const sRect& dest) = 0; 
+	virtual void Draw(const sRect& src, const sRect& dest) = 0;
 };
 
 #endif //_IRENDEROBJECT_H_

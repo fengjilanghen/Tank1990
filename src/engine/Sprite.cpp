@@ -8,6 +8,11 @@ CSprite::CSprite()
 {
 }
 
+CSprite::~CSprite()
+{
+	Release();
+}
+
 bool CSprite::Init(const std::string& bname, float opacity = 1.0f)
 {
 	if (bname != m_ImgName)

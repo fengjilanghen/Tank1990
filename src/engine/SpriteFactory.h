@@ -7,8 +7,17 @@
 class CSpriteFactory
 {
 public:
-	static CSpriteFactory* GetInstancePtr();
-	CSprite *CreateSprite(const std::string& img);
+	~CSpriteFactory();
+	CSprite *Create(const std::string& img);
+	void Tick(float dt){}
+	void Release();
+
+	static CSpriteFactory* GetInstancePtr()
+	{
+		static CSpriteFactory sf;
+		return &sf;
+	}
+
 private:
 	CSpriteFactory();
 	CSpriteFactory(const CSpriteFactory&) = delete;
@@ -17,7 +26,7 @@ private:
 	//void update(float delta_time);
 
 private:
-	typedef std::unordered_map<std::string, CSprite> SpriteUMap;
+	typedef std::unordered_map<std::string, CSprite*> SpriteUMap;
 	SpriteUMap	m_Sprites;
 };
 
