@@ -21,7 +21,7 @@ public:
 	typedef std::vector<CTank*>				TankVtr;
 	typedef std::vector<CMoveObject*>		MoveObjectVtr;
 
-	typedef std::vector<CGameObject*>		TileVtr;
+	//typedef std::vector<CGameObject*>		TileVtr;
 
 public:
 	CLevel1();
@@ -34,7 +34,6 @@ public:
 private:
 	bool getMapInfoHeader(const std::string &line);
 	void renderMap();
-	bool checkHawk(int count);
 
 private:
 	CTankFactory		m_TankFac;
@@ -50,6 +49,7 @@ private:
 	int					m_nColumns;
 	int					m_nTileWidth;
 	int					m_nTileHeight;
+	int					m_nTotalTankCount;
 	int					m_nMaxTankCount;
 	MapVec				m_Map;
 
