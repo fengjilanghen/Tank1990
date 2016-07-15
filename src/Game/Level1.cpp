@@ -87,11 +87,22 @@ void CLevel1::Unload()
 
 
 void CLevel1::Update()
+{
+
 }
 
 void CLevel1::Render()
 {
 	renderMap();
+	m_MyTank->Draw();
+	for (auto it = m_Tanks.begin(); it != m_Tanks.end(); ++it)
+	{
+		(*it)->Draw();
+	}
+	for (auto it = m_Bullets.begin(); it != m_Bullets.end(); ++it)
+	{
+		(*it)->Draw();
+	}
 }
 
 void CLevel1::KeyEvent(int key, bool pressed)
@@ -102,22 +113,22 @@ void CLevel1::KeyEvent(int key, bool pressed)
 	case 'w':
 	case 'W':
 	{
-		m_GreenTank.Move(CTank::UP);
+				m_MyTank->Move(CTank::UP);
 	}break;
 	case 's':
 	case 'S':
 	{
-		m_GreenTank.Move(CTank::DOWN);
+				m_MyTank->Move(CTank::DOWN);
 	}break;
 	case 'a':
 	case 'A':
 	{
-		m_GreenTank.Move(CTank::LEFT);
+				m_MyTank->Move(CTank::LEFT);
 	}break;
 	case 'd':
 	case 'D':
 	{
-		m_GreenTank.Move(CTank::RIGHT);
+				m_MyTank->Move(CTank::RIGHT);
 	}break;
 
 	}
